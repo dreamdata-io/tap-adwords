@@ -172,11 +172,6 @@ def get_start_for_stream(customer_id, stream_name):
     return bk_start_date
 
 
-def apply_conversion_window(start_date):
-    conversion_window_days = int(CONFIG.get("conversion_window_days", "-30"))
-    return start_date + relativedelta(days=conversion_window_days)
-
-
 def get_end_date():
     if CONFIG.get("end_date"):
         return utils.strptime_with_tz(CONFIG.get("end_date"))
@@ -255,7 +250,7 @@ def sync_report(stream: str, field_list: List[str], sdk_client: adwords.AdWordsC
     # If an attribution window sync is interrupted, start where it left off
     start_date = get_attribution_window_bookmark(customer_id, stream)
     if start_date is None:
-        start_date = apply_conversion_window(get_start_for_stream(customer_id, stream))
+        start_date = get_start_for_stream(customer_id, stream)
 
     if stream in REPORTS_WITH_90_DAY_MAX:
         cutoff = utils.now() + relativedelta(days=-90)
@@ -405,6 +400,7 @@ def sync_report_for_day(
 ):  # pylint: disable=too-many-locals
     report_downloader = sdk_client.GetReportDownloader(version=VERSION)
     customer_id = sdk_client.client_customer_id
+
     report = {
         "reportName": "Seems this is required",
         "dateRangeType": "CUSTOM_DATE",
