@@ -176,7 +176,7 @@ def get_end_date():
     if CONFIG.get("end_date"):
         return utils.strptime_with_tz(CONFIG.get("end_date"))
 
-    return utils.now()
+    return utils.now()-datetime.timedelta(days=1)
 
 
 def state_key_name(customer_id, report_name):
