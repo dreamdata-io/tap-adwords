@@ -1347,6 +1347,7 @@ STREAM_FIELDS: Dict[str, List[str]] = {
         "day",
         "criterionServingStatus",
         "keywordState",
+        "searchImprShare"
     ],
     "GEO_PERFORMANCE_REPORT": [
         "customerID",
