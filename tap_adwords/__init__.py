@@ -444,7 +444,7 @@ def sync_report_for_day(
                 STATE,
                 stream_name,
                 state_key_name(sdk_client.client_customer_id, "date"),
-                start.strftime(utils.DATETIME_FMT),
+                start.strftime(utils.DATETIME_FMT_SAFE),
             )
             singer.write_state(STATE)
         else:
@@ -1348,7 +1348,7 @@ STREAM_FIELDS: Dict[str, List[str]] = {
         "day",
         "criterionServingStatus",
         "keywordState",
-        "searchImprShare"
+        "searchImprShare",
     ],
     "GEO_PERFORMANCE_REPORT": [
         "customerID",
